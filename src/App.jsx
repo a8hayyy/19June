@@ -74,7 +74,7 @@ function CenterModel() {
 
   return (
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={1.5}>
-      <group ref={modelRef} rotation={[0, Math.PI, 0]} position={[0, -2, 0]}>
+      <group ref={modelRef} rotation={[0, Math.PI, 0]} position={[0, 0, 0]}>
         <primitive object={scene} scale={7} />
       </group>
     </Float>
@@ -83,13 +83,12 @@ function CenterModel() {
 
 useGLTF.preload('https://ilcaswazxvirszvuzsei.supabase.co/storage/v1/object/public/herModel/her-model-v1.glb')
 
-// 2. THE SIMPLE, GLITCH-FREE SPLASH SCREEN
 function SplashLoader() {
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    // Fades out safely after 3.5 seconds
-    const timer = setTimeout(() => setIsVisible(false), 3500)
+    // 1.5 second delay before fading out
+    const timer = setTimeout(() => setIsVisible(false), 1500)
     return () => clearTimeout(timer)
   }, [])
 
@@ -99,29 +98,69 @@ function SplashLoader() {
         <motion.div
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }} // Long, cinematic fade
+          // Upgraded to a custom, buttery-smooth easing curve
+          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }} 
           style={{
             position: 'absolute',
             inset: 0,
             backgroundColor: '#020024',
             zIndex: 99999,
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            pointerEvents: 'none' // Ensures it doesn't block clicks while fading
+            pointerEvents: 'none' 
           }}
         >
-          <div style={{ fontFamily: 'cursive', fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            made with 
+          {/* THE OVERLINE: Minimalist, ultra-spaced sans-serif */}
+          <motion.div 
+            initial={{ opacity: 0, filter: 'blur(4px)' }} // Cinematic blur reveal
+            animate={{ opacity: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            style={{ 
+              color: 'rgba(255, 255, 255, 0.5)', 
+              fontFamily: 'system-ui, -apple-system, sans-serif', 
+              fontSize: '0.65rem', 
+              letterSpacing: '0.4em', // Wide tracking gives an instant premium feel
+              textTransform: 'uppercase',
+              marginBottom: '1.2rem' 
+            }}
+          >
+            A memory gallery
+          </motion.div>
+
+          {/* THE MAIN TEXT: Elegant, editorial serif */}
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ 
+              // Uses high-end built-in system serif fonts (like Apple's Didot or standard Playfair/Georgia)
+              fontFamily: '"Playfair Display", "Didot", "Bodoni MT", "Georgia", serif', 
+              fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', 
+              color: '#ffffff', 
+              fontWeight: 300,
+              fontStyle: 'italic',
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '12px' 
+            }}
+          >
+            For Anshika, with 
             <motion.span 
-              animate={{ scale: [1, 1.2, 1] }} 
-              transition={{ repeat: Infinity, duration: 1.2 }}
-              style={{ color: '#ff0055', display: 'inline-block' }}
+              animate={{ scale: [1, 1.1, 1] }} 
+              transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+              style={{ 
+                color: '#ff3366', // A slightly softer, more sophisticated rose-red
+                fontStyle: 'normal', 
+                fontSize: 'clamp(1.2rem, 3vw, 1.8rem)',
+                transform: 'translateY(2px)' // Visually centers the heart with the lowercase letters
+              }}
             >
               ❤
             </motion.span> 
-            by a8hay
-          </div>
+            by Abhay
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
