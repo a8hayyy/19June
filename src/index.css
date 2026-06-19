@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; 
+  /* CRITICAL: Stops phones from refreshing or bouncing when swiping! */
+  touch-action: none; 
+  background: radial-gradient(circle at center, #0c00ff 0%, #020044 100%); 
+  font-family: sans-serif;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
